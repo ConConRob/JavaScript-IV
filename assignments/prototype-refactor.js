@@ -145,65 +145,70 @@ class Humanoid extends CharacterStats{
     // * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
     // * Create two new objects, one a villain and one a hero and fight it out with methods!
     //HERO
-//   const Hero = function (attributes){
-//     Humanoid.call(this, attributes);
-//     this.attackMultiplier = attributes.attackMultiplier;
-//   }
-//   //attack function
-//   function attack(target){
-//     const damage = Math.random()*this.attackMultiplier;
-//     target.healthPoints -= damage;
-//     console.log(target.takeDamage());
-//     if(target.healthPoints<=0){
-//       console.log(target.destroy());
-//     }
-//   }
-//   //set hero protos
-//   Hero.prototype = Object.create(Humanoid.prototype);
-//   Hero.prototype.SuperHeroAttack = attack;
+    //attack function
+const attack = (me, target) =>{
+    console.log(this);
+    const damage = Math.random()*me.attackMultiplier;
+    target.healthPoints -= damage;
+    console.log(target.takeDamage());
+    if(target.healthPoints<=0){
+        console.log(target.destroy());
+    }
+}
+class Hero extends Humanoid{
+    constructor(attributes){
+        super(attributes);
+        this.attackMultiplier = attributes.attackMultiplier;
+    }
+    SuperHeroAttack(target) {
+        const me = this;
+        attack(me,target)
+    }
+}
+//VILLIAIN
   
-//   //VILLIAIN
+class Villain extends Humanoid {
+    constructor(attributes){
+        super(attributes);
+        this.attackMultiplier = attributes.attackMultiplier
+    }
+    rapidAtack(target){
+        const me = this;
+        for(let i = 0; i<3; i++){
+            attack(me, target);
+        }
+    }
+}
   
-//   const Villain = function(attributes){
-//     Humanoid.call(this, attributes);
-//     this.attackMultiplier = attributes.attackMultiplier
-//   }
-//   Villain.prototype = Object.create(Humanoid.prototype);
-//   Villain.prototype.rapidAtack = function(target) {
-//     for(let i = 0; i<3; i++){
-//      attack.call(this,target);
-//     }
-//   }
+  const chuckNorris = new Hero({
+    dimensions: {
+      length: 5,
+      width: 5,
+      height: 5,
+    },
+    healthPoints: 1000,
+    name: 'Chuck Norris',
+    team: 'United States Air Force',
+    weapons: [
+      'FISTS',
+    ],
+    language: 'English',
+    attackMultiplier: 100,
+  });
   
-//   const chuckNorris = new Hero({
-//     dimensions: {
-//       length: 5,
-//       width: 5,
-//       height: 5,
-//     },
-//     healthPoints: 1000,
-//     name: 'Chuck Norris',
-//     team: 'United States Air Force',
-//     weapons: [
-//       'FISTS',
-//     ],
-//     language: 'English',
-//     attackMultiplier: 100,
-//   });
-  
-//   const bruce = new Villain({
-//     dimensions: {
-//       length: 1,
-//       width: 2,
-//       height: 4,
-//     },
-//     healthPoints: 1000,
-//     name: 'Bruce Lee',
-//     team: 'Bruce Gang',
-//     weapons: [
-//       'fists',
-//       'feet'
-//     ],
-//     language: 'Human',
-//     attackMultiplier: 50,
-//   });
+  const bruce = new Villain({
+    dimensions: {
+      length: 1,
+      width: 2,
+      height: 4,
+    },
+    healthPoints: 700,
+    name: 'Bruce Lee',
+    team: 'Bruce Gang',
+    weapons: [
+      'fists',
+      'feet'
+    ],
+    language: 'Human',
+    attackMultiplier: 50,
+  });
