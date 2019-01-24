@@ -61,6 +61,9 @@ class Instructor extends Person {
     grade(student, subject){
         console.log(`${student.name} receives a perfect score on ${subject}`);
     }
+    changeGrade(student){
+        student.grade += (Math.random()-.5)*10;
+    }
 }
 
 // #### Student
@@ -81,6 +84,8 @@ class Student extends Person {
         this.previousBackground = previousBackground;
         this.className = className;
         this.favSubjects = favSubjects;
+        this.grade = Math.random()*100;
+        this.isGrad = false;
     }
     listsSubjects(){
         this.favSubjects.forEach(favSubject => {console.log(favSubject)});
@@ -91,8 +96,17 @@ class Student extends Person {
     sprintChallenge(subject){
         console.log(`${this.name} has begun sprint challenge on ${subject}`)
     }
+    graduate(){
+        if(this.grade>70 ||this.isGrad){
+            this.isGrad=true;
+            console.log(`${this.name} graduated`)
+        }else{
+            console.log('Not ready to grad');
+        }
+    }
 }
-
+//   * This method, when called, will check the grade of the student and see if they're ready to graduate from Lambda School
+//   * If the student's grade is above a 70% let them graduate! Otherswise go back to grading their assignments to increase their score.
 // #### Project Mananger
 
 // * Now that we have instructors and students, we'd be nowhere without our PM's
@@ -118,6 +132,27 @@ class ProjectManager extends Instructor {
 }
 
 //================================TESTS============================================
+//PERSONS
+const tim = new Person({
+    name: 'Tim',
+    location: 'Canada',
+    age: 37,
+    gender: 'male',
+});
+const jim = new Person({
+    name: 'Jim',
+    location: 'Nanaimo',
+    age: 23,
+    gender: 'male',
+});
+const kim = new Person({
+    name: 'Kim',
+    location: 'Vancouver',
+    age: 26,
+    gender: 'female',
+});
+
+//Instructors
 const fred = new Instructor({
     name: 'Fred',
     location: 'Bedrock',
@@ -127,6 +162,74 @@ const fred = new Instructor({
     specialty: 'Front-end',
     catchPhrase: `Don't forget the homies`
   });
+  const ted = new Instructor({
+    name: 'Ted',
+    location: 'New York',
+    age: 80,
+    gender: 'male',
+    favLanguage: 'machine code',
+    specialty: 'Old stuff',
+    catchPhrase: `Forgot all the homies`
+  });
+
+//students
+const connor = new Student({
+    name: 'Connor',
+    location: 'Moffat',
+    age: 25,
+    gender: 'male',
+    previousBackground: 'MECH ENG', 
+    className: 'WEBEU1', 
+    favSubjects: 'javascript'
+});
+
+const baxtor = new Student({
+    name: 'Baxtor',
+    location: 'London',
+    age: 35,
+    gender: 'male',
+    previousBackground: 'cool things', 
+    className: 'to cool for school', 
+    favSubjects: 'whatever is in'
+});
+//PMS
+const orlando = new ProjectManager({
+    name: 'Orlando',
+    location: 'USA',
+    age: '?',
+    gender: 'male',
+    favLanguage: 'JavaScript',
+    specialty: 'everything',
+    catchPhrase: `Don't forget the homies`,
+    gradClassName:'the best one',
+    favInstructor:'Gabe'
+});
+const stranger = new ProjectManager({
+    name: '...',
+    location: '...',
+    age: '...',
+    gender: '...',
+    favLanguage: '...',
+    specialty: '...',
+    catchPhrase: `...`,
+    gradClassName: '...',
+    favInstructor: '...',
+});
+
+
+
+tim.speak();//Hello my name is Tim, I am from Canada
+jim.speak();//Hello my name is Jim, I am from Nanaimo
+kim.speak();//Hello my name is Kim, I am from Vancouver
+ted.demo('old stuff');//Today we are learning about old stuff
+fred.grade(connor, 'javascript'); //Connor receives a perfect score on javascript
+stranger.standUp('weird channel');//... announces to weird channel, @channel standy times!​​​​​
+orlando.debugsCode(baxtor, "js"); //Orlando debugs Baxtor's code on js
+//STRETCH test
+console.log(connor.grade);
+orlando.changeGrade(connor);
+console.log(connor.grade);
+connor.graduate()
 // #### Stretch Problem
 
 // * Extend the functionality of the Student by adding a prop called grade and setting it equal to a number between 1-100.
